@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernutty
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: kubernutty
+  template:
+    metadata:
+      labels:
+        name: kubernutty
+    spec:
+      containers:
+        - name: kubernutty
+          image: chunfeilung/kubernutty
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 1
+              memory: 2G
+            limits:
+              cpu: 1
+              memory: 2G
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubernutty
+spec:
+  ports:
+    - name: http
+      port: 80
+  selector:
+    name: kubernutty
